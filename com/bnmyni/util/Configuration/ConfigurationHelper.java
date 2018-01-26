@@ -195,7 +195,8 @@ public final class ConfigurationHelper {
 		return getDeployConfiguration(configurationFileName, refreshDelay,false);
 	}
 
-	public static Configuration getDeployConfiguration(String configurationFileName, long refreshDelay, boolean delimiterParsingDisabled) {
+	public static Configuration getDeployConfiguration(String configurationFileName, long refreshDelay, 
+		boolean delimiterParsingDisabled) {
 		String fileName = getDeployFullFileName(configurationFileName);
 		return getBaseConfiguration(fileName, refreshDelay, delimiterParsingDisabled);
 	}
