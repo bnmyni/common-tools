@@ -245,6 +245,30 @@ public class FileUtil {
 	public static void moveFolder(String oldPath, String newPath) {
 		copyFolder(oldPath, newPath);
 		//removeFolder(oldPath);
-	}
+	}	
+	
+	/**
+	 * 读取远程文件的最后修改时间 
+	 * 如果为本地文件： File file = new File(url); file.lastModefied();
+	 */
+	public String getLastModifiedDate() {
+        HttpClient httpclient = new HttpClient();
+        GetMethod getMethod = new GetMethod(configuration.getURL().toString());
+        try {
+            httpclient.executeMethod(getMethod);
+            Header lastModifiedHeader = getMethod
+                    .getResponseHeader("Last-Modified");
+            if (lastModifiedHeader != null) {
+                return lastModifiedHeader.getValue();
+            }
+        } catch (HttpException e) {
+            logger.error("打开URL失败，URL：" + configuration.getURL().toString());
+        } catch (IOException e) {
+            logger.error("打开URL失败：" + configuration.getURL().toString());
+        } finally {
+            getMethod.releaseConnection();            
+        }
+        return null;
+    }
 }
 
