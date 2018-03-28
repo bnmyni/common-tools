@@ -1,0 +1,16 @@
+1.编写清除脚本 clear_index.sh 内容如下：
+#!/bin/bash
+i=7
+echo `date`
+while [ $i -le 15 ];
+  do
+    indexName=`date +"%Y%m%d" -d"-$i day"`
+    curl -XDELETE "http://172.30.150.26:29200/*-$indexName"
+    i=`expr $i + 1 ` 
+  done
+
+2.设置定时执行（每天1点执行）  
+0 1 * * * /home/es/clear_index.sh >>/home/es/clear_index.log
+测试可以设置为每一分钟执行一次
+*/1 * * * * /home/es/clear_index.sh >>/home/es/clear_index.log
+
